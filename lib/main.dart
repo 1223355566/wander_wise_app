@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_screen.dart';
+import 'package:wander_wise_app/ui/screens/spalash_screen/spalash_screen.dart';
+import 'package:wander_wise_app/ui/utils/app_color.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +16,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: AppColors.secondaryColor,
         useMaterial3: true,
       ),
-      home: Image.asset("assets/images/1.png"),
+      routes: {
+        SpalashScreen.routeName: (context) => const SpalashScreen(),
+        OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
+      },
+      initialRoute: SpalashScreen.routeName,
     );
   }
 }
