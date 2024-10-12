@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wander_wise_app/ui/screens/Auth/auth.dart';
 import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_screen.dart';
 import 'package:wander_wise_app/ui/utils/app_stings.dart';
 import 'package:wander_wise_app/ui/utils/app_text_style.dart';
@@ -13,17 +15,18 @@ class SpalashScreen extends StatefulWidget {
 }
 
 class _SpalashScreenState extends State<SpalashScreen> {
+  final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   @override
   initState() {
+    checkIfFirstTime(prefs, context);
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, OnBoardingScreen.routeName);
-    });
 
     // todo: check if user is logged in
     // if yes, go to home screen
     // if no, go to onboarding screen
     //todo:is frist time
+    // if no go to signup screen or login screen
+    // if yes go into onboarding screen
   }
 
   @override
@@ -36,4 +39,21 @@ class _SpalashScreenState extends State<SpalashScreen> {
       )),
     );
   }
+}
+
+void checkIfFirstTime(
+    Future<SharedPreferences> prefs, BuildContext context) async {
+  prefs.then((SharedPreferences prefs) {
+    bool isFirstTime = prefs.getBool('isVisted') == true;
+    print("isFirstTime: $isFirstTime");
+    if (!isFirstTime) {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacementNamed(context, OnBoardingScreen.routeName);
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacementNamed(context, Auth.routeName);
+      });
+    }
+  });
 }

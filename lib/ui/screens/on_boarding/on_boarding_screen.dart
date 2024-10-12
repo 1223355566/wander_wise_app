@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wander_wise_app/ui/screens/Auth/auth.dart';
-import 'package:wander_wise_app/ui/utils/app_assets.dart';
+import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_view_modle.dart';
 import 'package:wander_wise_app/ui/utils/app_color.dart';
 import 'package:wander_wise_app/ui/utils/constans.dart';
 
@@ -14,24 +14,8 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  int index = 0;
-  bool isIn = false;
+  OnBoardingViewModle viewModle = OnBoardingViewModle();
 
-  List<String> titles = [
-    "Explore The history with Dalel\n in a smart way",
-    "From every placeon earth",
-    "Using modern AI technology\nfor better user experience"
-  ];
-  List<String> subtitles = [
-    "LUsing our app’s history libraries \nyou can find many historical periods ",
-    "DA big variety of ancient places\nfrom all over the world",
-    "AI provide recommendations and helps\nyou to continue the search journey"
-  ];
-  List<String> images = [
-    Assets.assetsImages1,
-    Assets.assetsImages2,
-    Assets.assetsImages3
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,22 +30,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     height: AppConstants.screenHeight(context) * 0.5,
                     width: AppConstants.screenWidth(context),
                     child: AnimatedScale(
-                        scale: isIn ? 0 : 1,
+                        scale: viewModle.isIn ? 0 : 1,
                         duration: const Duration(milliseconds: 250),
                         child: Image.asset(
-                          images[index],
+                          viewModle.images[viewModle.index],
                         ))),
                 Expanded(
                   child: Center(
                     child: Stack(
                       children: [
                         AnimatedPositioned(
-                          left: isIn
+                          left: viewModle.isIn
                               ? AppConstants.screenWidth(context) + 100
                               : AppConstants.screenWidth(context) * .15,
                           duration: const Duration(milliseconds: 250),
                           child: Text(
-                            titles[index],
+                            viewModle.titles[viewModle.index],
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 25,
@@ -77,8 +61,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: Stack(
                     children: [
                       AnimatedPositioned(
-                        right:
-                            isIn ? AppConstants.screenWidth(context) + 100 : 0,
+                        right: viewModle.isIn
+                            ? AppConstants.screenWidth(context) + 100
+                            : 0,
                         duration: const Duration(milliseconds: 250),
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -86,7 +71,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             child: SizedBox(
                               width: AppConstants.screenWidth(context) * 0.85,
                               child: Text(
-                                subtitles[index],
+                                viewModle.subtitles[viewModle.index],
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 20,
@@ -102,11 +87,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomIndicator(active: index == 0),
+                    CustomIndicator(active: viewModle.index == 0),
                     const SizedBox(width: 10),
-                    CustomIndicator(active: index == 1),
+                    CustomIndicator(active: viewModle.index == 1),
                     const SizedBox(width: 10),
-                    CustomIndicator(active: index == 2),
+                    CustomIndicator(active: viewModle.index == 2),
                   ],
                 ),
                 SizedBox(height: AppConstants.screenWidth(context) * 0.1),
@@ -114,12 +99,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        setState(() {
-                          index = 2;
-                        });
-                      },
-                      child: Text(index == 2 ? "Register" : "skip",
+                      onPressed: viewModle.index == 2
+                          ? () {
+                              //todo:navigate to Register screen
+                              Navigator.pushReplacementNamed(
+                                  context, Auth.routeName);
+                              viewModle.setIsVisted();
+                            }
+                          : () {
+                              setState(() {
+                                viewModle.index = 2;
+                              });
+                            },
+                      child: Text(viewModle.index == 2 ? "Register" : "skip",
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
@@ -128,25 +120,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           backgroundColor: MaterialStateProperty.all(
                         AppColors.primaryColor,
                       )),
-                      onPressed: index == 2
+                      onPressed: viewModle.index == 2
                           ? () {
                               //todo:navigate to sing up screen
                               Navigator.pushReplacementNamed(
                                   context, Auth.routeName);
+                              viewModle.setIsVisted();
                             }
                           : () {
                               setState(() {
-                                isIn = !isIn;
-                                index = index == 2 ? 0 : index + 1;
+                                viewModle.isIn = !viewModle.isIn;
+                                viewModle.index = viewModle.index == 2
+                                    ? 0
+                                    : viewModle.index + 1;
                               });
                               Timer(const Duration(milliseconds: 300), () {
                                 return setState(() {
-                                  isIn = !isIn;
+                                  viewModle.isIn = !viewModle.isIn;
                                 });
                               });
                             },
                       child: Text(
-                        index == 2 ? "login" : "Next",
+                        viewModle.index == 2 ? "login" : "Next",
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
