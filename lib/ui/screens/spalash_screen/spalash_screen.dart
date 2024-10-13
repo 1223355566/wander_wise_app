@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wander_wise_app/ui/screens/Auth/auth.dart';
+import 'package:wander_wise_app/ui/screens/Auth/signup/signup_screen.dart';
 import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_screen.dart';
 import 'package:wander_wise_app/ui/utils/app_stings.dart';
 import 'package:wander_wise_app/ui/utils/app_text_style.dart';
@@ -52,7 +52,7 @@ void checkIfFirstTime(
       });
     } else {
       Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushReplacementNamed(context, Auth.routeName);
+        Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
       });
     }
   });

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:wander_wise_app/ui/screens/Auth/auth.dart';
+import 'package:wander_wise_app/ui/screens/Auth/signup/signup_screen.dart';
 import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_view_modle.dart';
 import 'package:wander_wise_app/ui/utils/app_color.dart';
 import 'package:wander_wise_app/ui/utils/constans.dart';
@@ -103,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           ? () {
                               //todo:navigate to Register screen
                               Navigator.pushReplacementNamed(
-                                  context, Auth.routeName);
+                                  context, SignUpScreen.routeName);
                               viewModle.setIsVisted();
                             }
                           : () {
@@ -124,7 +124,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           ? () {
                               //todo:navigate to sing up screen
                               Navigator.pushReplacementNamed(
-                                  context, Auth.routeName);
+                                  context, SignUpScreen.routeName);
                               viewModle.setIsVisted();
                             }
                           : () {

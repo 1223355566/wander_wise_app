@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wander_wise_app/ui/screens/Auth/auth.dart';
+import 'package:wander_wise_app/ui/screens/Auth/rest_password/rest_password_screen.dart';
+import 'package:wander_wise_app/ui/screens/Auth/signin/signin_screen.dart';
+import 'package:wander_wise_app/ui/screens/Auth/signup/signup_screen.dart';
 import 'package:wander_wise_app/ui/screens/on_boarding/on_boarding_screen.dart';
 import 'package:wander_wise_app/ui/screens/spalash_screen/spalash_screen.dart';
 import 'package:wander_wise_app/ui/utils/app_color.dart';
@@ -24,9 +26,11 @@ class MyApp extends StatelessWidget {
       routes: {
         SpalashScreen.routeName: (context) => const SpalashScreen(),
         OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
-        Auth.routeName: (context) => const Auth(),
+        SignUpScreen.routeName: (context) => const SignUpScreen(),
+        SignInScreen.routeName: (context) => const SignInScreen(),
+        RestPasswordScreen.routeName: (context) => const RestPasswordScreen(),
       },
-      initialRoute: SpalashScreen.routeName,
+      initialRoute: SignUpScreen.routeName,
     );
   }
 }
